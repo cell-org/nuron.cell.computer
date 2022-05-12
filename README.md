@@ -18,25 +18,74 @@ Nuron is an NFT management system that lets you create and manage NFTs. It is ma
 
 ## 1. Download
 
-There are two ways to install:
+### 1.1. Mac
 
-1. **Desktop app:** Easier to download and install. Has a dedicated app (recommended for personal usage).
-2. **Terminal app:** install through terminal and run it as a background process (recommended for server usage).
+Download on Mac:
 
-### Desktop app
+<a class='btn' href="https://github.com/cell-org/nutron/releases/download/v0.0.1/nuron-0.0.1.dmg"><i class="fa-brands fa-apple"></i> Mac Installer</a>
 
-Recommended if you can install
+---
 
-1. Download and open the app: TBD
-2. Open http://localhost:42000 in your browser and you will see a login screen.
+### 1.2. Windows
 
-### Terminal app
+Download on Windows:
 
-Recommended if you're trying to run Nuron as a backend, or building a web app on a linux machine
+<a class='btn' href="https://github.com/cell-org/nutron/releases/download/v0.0.1/nuron.Setup.0.0.1.exe"><i class="fa-brands fa-windows"></i> Windows Installer</a>
 
-1. Install Nuron: `npm install -g nuron`
-2. Start Nuron: `nuron start`
-3. Configure Nuron: `nuron config`
+---
+
+### 1.3. Linux
+
+On Linux, we recommend using Docker to run Nuron. You need to install both [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
+
+> You can also use the docker approach on Mac and Windows but for desktop settings it's much easier to just download the desktop apps.
+
+#### A. Install Docker
+
+First, install Docker by running the following commands ([Learn more](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script))
+
+```
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+```
+
+
+#### B. Install Docker Compose
+
+Next, install Docker Compose by running the following commands ([Learn more](https://docs.docker.com/compose/install/)):
+
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+After the installation, check to make sure it's correctly installed:
+
+```
+docker-compose --version
+```
+
+It should print the current version.
+
+
+#### C. Install and Run Nuron
+
+To download and start Nuron, open the terminal and run the following command:
+
+```
+npx nuron start
+```
+
+This will automatically pull the docker image and start a container. run the following command to check that the container is running:
+
+```
+docker ps
+```
+
+You are all set to go if you see a Nuron container running:
+
+![dockerps.png](dockerps.png)
+
 
 ## 2. Setup
 
@@ -762,9 +811,33 @@ POST /web/build
 
 {
   "workspace": <nuron workspace folder path>,
-  "domain": <token domain>
+  "domain": <token domain>,
+  "templates": <templates array (optional)>
 }
 ```
+
+Where `<templates array>` is an array of template mapping objects, each of which has the following attributes:
+
+- `src`: the ejs template location (HTTP URL or file path)
+- `dest`: the file names to create render from the `src` template files.
+
+Here's an example:
+
+
+```json
+{
+  "workspace": <nuron workspace folder path>,
+  "domain": <token domain>,
+  "templates": [{
+    "src": "https://myserver.com/index.ejs",
+    "dest": "index.html"
+  }, {
+    "src": "https://myserver.com/token.ejs",
+    "dest": "token.html"
+  }]
+}
+```
+
 
 if successful, returns:
 

@@ -11,109 +11,26 @@ Nuron is an NFT management system that lets you create and manage NFTs. It is ma
 2. **NFT File System:** store and manage IPFS files both locally and publish when ready
 3. **NFT Database:** store signed tokens locally and publish when ready
 
----
+> If you're looking for a way to download nuron, check out the Tutorial here: https://tutorial.cell.computer/#/?id=_2-download-nuron
 
-
-# Getting started
-
-## 1. Download
-
-### 1.1. Mac
-
-Download on Mac:
-
-<a class='btn' href="https://github.com/cell-org/nutron/releases/download/v0.0.1/nuron-0.0.1.dmg"><i class="fa-brands fa-apple"></i> Mac Installer</a>
-
----
-
-### 1.2. Windows
-
-Download on Windows:
-
-<a class='btn' href="https://github.com/cell-org/nutron/releases/download/v0.0.1/nuron.Setup.0.0.1.exe"><i class="fa-brands fa-windows"></i> Windows Installer</a>
-
----
-
-### 1.3. Linux
-
-On Linux, we recommend using Docker to run Nuron. You need to install both [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/)
-
-> You can also use the docker approach on Mac and Windows but for desktop settings it's much easier to just download the desktop apps.
-
-#### A. Install Docker
-
-First, install Docker by running the following commands ([Learn more](https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script))
-
-```
-curl -fsSL https://get.docker.com -o get-docker.sh
-sudo sh get-docker.sh
-```
-
-
-#### B. Install Docker Compose
-
-Next, install Docker Compose by running the following commands ([Learn more](https://docs.docker.com/compose/install/)):
-
-```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-After the installation, check to make sure it's correctly installed:
-
-```
-docker-compose --version
-```
-
-It should print the current version.
-
-
-#### C. Install and Run Nuron
-
-To download and start Nuron, open the terminal and run the following command:
-
-```
-npx nuron start
-```
-
-This will automatically pull the docker image and start a container. run the following command to check that the container is running:
-
-```
-docker ps
-```
-
-You are all set to go if you see a Nuron container running:
-
-![dockerps.png](dockerps.png)
-
-
-## 2. Setup
-
-
-Once Nuron is downloaded and running, you will need to set up wallets and connect to IPFS.
-
-### Set up wallet
-
-Nuron is simple but also very powerful. It lets you not only maintain one wallet but as many wallets as you want (Most blockchain wallets only let you maintain a single wallet seed. Nuron lets you manage as many as you want).
-
-You can set up wallets by:
-
-1. **importing:** import a seed phrase
-2. **generating:** generate a random seed
-
-### Set up IPFS
-
-Nuron uses [NFT.STORAGE](https://nft.storage) for pinning NFT files. You will need to sign up for nft.storage and enter the API KEY
-
-
----
-
-# Usage
+## Usage
 
 Once installed, you can interact with your Nuron using HTTP requests:
 
 1. Use the HTTP API directly: You can use whatever programming language you want (python, javascript, ruby, etc.)
 2. Use a JavaScript library: [nuron.js](https://nuronjs.cell.computer) is just a wrapper library that makes it easy to interact with a Nuron using simple JavaScript code.
+
+## Making requests to Nuron
+
+You don't have to use **nuron.js**. You can build your own Nuron client, or just directly program networking code to interact with Nuron, using any programming language. It's simple because Nuron is just a local HTTP server.
+
+Check out the API reference section below for all available endpoints. For example, for `GET /wallet/accounts`, you can do this:
+
+```javascript
+let accounts = await fetch("http://localhost:42000/wallet/accounts").then((res) => {
+  return res.json()
+})
+```
 
 ---
 

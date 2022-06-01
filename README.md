@@ -293,14 +293,14 @@ or if there's an error:
 
 ## fs
 
-### GET /fs/raw/:path
+### GET /raw/:path
 
 Get the files at `:path` within the Nuron file system.
 
 For example,
 
 ```
-GET /fs/raw/cube/index.html
+GET /raw/cube/web/index.html
 ```
 
 returns the `index.html` file under the `cube` workspace folder

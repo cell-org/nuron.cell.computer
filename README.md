@@ -1,28 +1,27 @@
 ![nuron.png](nuron.png)
 
-# Nuron
+# nurond
 
-> NFT Management System
+> NFT Processing Unit
 
-
-Nuron is an NFT management system that lets you create and manage NFTs. It is made up of:
+Nurond is a low level engine that lets you create and manage NFTs from HTTP requests. It is made up of:
 
 1. **Programmable Wallet:** automatically sign messages by POSTing messages to sign over HTTP
 2. **NFT File System:** store and manage IPFS files both locally and publish when ready
 3. **NFT Database:** store signed tokens locally and publish when ready
 
-> If you're looking for a way to download nuron, check out the Tutorial here: https://tutorial.cell.computer/#/?id=_2-download-nuron
+> If you're looking for a way to download nurond, check out the Tutorial here: https://tutorial.cell.computer/#/?id=_2-download-nuron
 
 ## Usage
 
-Once installed, you can interact with your Nuron using HTTP requests:
+Once installed, you can interact with your Nurond using HTTP requests:
 
 1. Use the HTTP API directly: You can use whatever programming language you want (python, javascript, ruby, etc.)
-2. Use a JavaScript library: [nuron.js](https://nuronjs.cell.computer) is just a wrapper library that makes it easy to interact with a Nuron using simple JavaScript code.
+2. Use a JavaScript library: [nuron.js](https://nuronjs.cell.computer) is just a wrapper library that makes it easy to interact with a Nurond using simple JavaScript code.
 
-## Making requests to Nuron
+## Making requests to Nurond
 
-You don't have to use **nuron.js**. You can build your own Nuron client, or just directly program networking code to interact with Nuron, using any programming language. It's simple because Nuron is just a local HTTP server.
+You don't have to use **nuron.js**. You can build your own Nuron client, or just directly program networking code to interact with Nurond, using any programming language. It's simple because Nurond is just a local HTTP server.
 
 Check out the API reference section below for all available endpoints. For example, for `GET /wallet/accounts`, you can do this:
 
@@ -222,7 +221,7 @@ returns:
 
 ### POST /wallet/import
 
-Import a `seed` phrase, encrypt it with `password`, and store it under `username` account on Nuron.
+Import a `seed` phrase, encrypt it with `password`, and store it under `username` account on Nurond.
 
 ```
 POST /wallet/import
@@ -259,7 +258,7 @@ or if there's an error:
 
 ### POST /wallet/generate
 
-generate a random seed phrase, encrypt it with the `password` and store it under the `username` account on Nuron.
+generate a random seed phrase, encrypt it with the `password` and store it under the `username` account on Nurond.
 
 ```
 POST /wallet/generate
@@ -295,7 +294,7 @@ or if there's an error:
 
 ### GET /raw/:path
 
-Get the files at `:path` within the Nuron file system.
+Get the files at `:path` within the Nurond file system.
 
 For example,
 
@@ -323,7 +322,7 @@ returns
     "key": <nft.storage APK key>
   },
   "workspace": {
-    "home": <the folder path where the nuron stores everything>
+    "home": <the folder path where the nurond stores everything>
   }
 }
 ```
@@ -358,7 +357,7 @@ if failed, returns the error message:
 
 ### POST /fs/binary
 
-Ask Nuron to save a Buffer object to the file system. Here's an example JavaScript code to make the POST request:
+Ask Nurond to save a Buffer object to the file system. Here's an example JavaScript code to make the POST request:
 
 
 ```javascript
@@ -413,7 +412,7 @@ remove cids from the `fs` folder
 POST /fs/rm
 
 {
-  "workspace": <the nuron workspace path>,
+  "workspace": <the nurond workspace path>,
   "cids": <an array of IPFS cids to remove from the fs folder>
 }
 ```
@@ -447,7 +446,7 @@ if failed, returns:
 POST /fs/pin
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "cid": <The IPFS cid of the file to pin>
 }
 ```
@@ -466,7 +465,7 @@ returns
 }
 ```
 
-Lf you want to pin the entire `fs` folder within the Nuron project folder `canvas`, you can make a POST request without the `cid` attribute:
+Lf you want to pin the entire `fs` folder within the Nurond project folder `canvas`, you can make a POST request without the `cid` attribute:
 
 ```json
 POST /fs/pin
@@ -563,7 +562,7 @@ returns the generated token:
 
 ## db
 
-The Nuron DB is powered by [Mixtape](https://mixtape.papercorp.org).
+The Nurond DB is powered by [Mixtape](https://mixtape.papercorp.org).
 
 
 ### POST /db/write
@@ -575,7 +574,7 @@ save objects to the database at `mixtape.db`.
 POST /db/write
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "table": <table name>,
   "payload": <signed or unsigned token, or a metadata object>
 }
@@ -613,7 +612,7 @@ read the sqlite database stored inside the file `mixtape.db` at a specified path
 POST /db/read
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "table": <table name>,
   "payload": <query language>
 }
@@ -650,7 +649,7 @@ read the sqlite database stored inside the file `mixtape.db` at a specified path
 POST /db/readOne
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "table": <table name>,
   "payload": <query language>
 }
@@ -687,7 +686,7 @@ Deletes the rows that match the query
 POST /db/rm
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "table": <table name>,
   "payload": <query language>
 }
@@ -718,6 +717,8 @@ If failed, returns:
 
 ## web
 
+### POST /web/build
+
 Build a static site for the workspace at path `workspace` for the tokens of `domain`. Builds the following web pages, which you can publish immediately to the web and let people mint:
 
 - `index.html`: the home page that dieplays all tokens
@@ -727,7 +728,7 @@ Build a static site for the workspace at path `workspace` for the tokens of `dom
 POST /web/build
 
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "domain": <token domain>,
   "templates": <templates array (optional)>
 }
@@ -743,7 +744,7 @@ Here's an example:
 
 ```json
 {
-  "workspace": <nuron workspace folder path>,
+  "workspace": <nurond workspace folder path>,
   "domain": <token domain>,
   "templates": [{
     "src": "https://myserver.com/index.ejs",
@@ -769,5 +770,24 @@ or if there's an error:
 ```json
 {
   "error": <error message>
+}
+```
+
+
+### POST /web/publish
+
+Copy everything in the workspace into the `published` subfolder in the workspace, which will be available publicly.
+
+> This is not very useful when using nurond directly, but when you use high level systems like Nuron, which adds an authentication layer.
+>
+> With [Nuron](https://nuron.app), only the administrator can access the admin dashboard and access the files.
+>
+> But the "published" folder is an exception. Once you put files into the published folder, they will be available publicly.
+
+```
+POST /web/publish
+
+{
+  "workspace": <nurond workspace folder path>
 }
 ```
